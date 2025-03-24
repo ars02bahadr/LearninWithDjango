@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Kullanıcı Tipleri</h2>
+                <a href="{% url 'user_type_create' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Yeni Kullanıcı Tipi</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" name="search" class="form-control" placeholder="Ara..." value="{{ search_query }}">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i> Ara</button>
+                </div>
+            </form>
+
+
+            <hr>
+            <div class="table-responsive">
+                <table class="table table-striped text-center table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Açıklama</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user_type in user_types %}
+                            <tr>
+                                <td>{{ user_type.id }}</td>
+                                <td>{{ user_type.name }}</td>
+                                <td>{{ user_type.description }}</td>
+                                <td>
+                                    <a href="{% url 'user_type_update' user_type.pk %}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="{% url 'user_type_delete' user_type.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Emin misiniz?')"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">Kayıt bulunamadı.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="card-footer">
+            {% if user_types.has_other_pages %}
+            <nav aria-label="Sayfalama">
+                <ul class="pagination justify-content-center">
+                    {% if user_types.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ user_types.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Önceki</a>
+                        </li>
+                    {% endif %}
+    
+                    {% for num in user_types.paginator.page_range %}
+                        {% if user_types.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+    
+                    {% if user_types.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ user_types.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Sonraki</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+        </div>
+
+    </div>
+
+    
+
+    
+</div>
+{% endblock %} 
