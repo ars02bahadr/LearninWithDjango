@@ -13,8 +13,8 @@
     <div class="card mb-4">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Kullanıcı Tipleri</h2>
-                <a href="{% url 'user_type_create' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Yeni Kullanıcı Tipi</a>
+                <h2>Kullanıcı Rolleri</h2>
+                <a href="{% url 'user_role_create' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Yeni Kullanıcı Rolü</a>
             </div>
         </div>
         <div class="card-body">
@@ -40,14 +40,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user_type in user_types %}
+                        {% for user_role in user_roles %}
                             <tr>
-                                <td>{{ user_type.id }}</td>
-                                <td>{{ user_type.name }}</td>
-                                <td>{{ user_type.description }}</td>
+                                <td>{{ user_role.id }}</td>
+                                <td>{{ user_role.name }}</td>
+                                <td>{{ user_role.description }}</td>
                                 <td>
-                                    <a href="{% url 'user_type_update' user_type.pk %}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Güncelle</a>
-                                    <a href="{% url 'user_type_delete' user_type.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Emin misiniz?')"><i class="fas fa-trash"></i> Sil</a>
+                                    <a href="{% url 'user_role_update' user_role.pk %}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Güncelle</a>
+                                    <a href="{% url 'user_role_delete' user_role.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Emin misiniz?')"><i class="fas fa-trash"></i> Sil</a>
                                 </td>
                             </tr>
                         {% empty %}
@@ -61,17 +61,17 @@
             
         </div>
         <div class="card-footer">
-            {% if user_types.has_other_pages %}
+            {% if user_roles.has_other_pages %}
             <nav aria-label="Sayfalama">
                 <ul class="pagination justify-content-center">
-                    {% if user_types.has_previous %}
+                    {% if user_roles.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ user_types.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Önceki</a>
+                            <a class="page-link" href="?page={{ user_roles.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Önceki</a>
                         </li>
                     {% endif %}
     
-                    {% for num in user_types.paginator.page_range %}
-                        {% if user_types.number == num %}
+                    {% for num in user_roles.paginator.page_range %}
+                        {% if user_roles.number == num %}
                             <li class="page-item active">
                                 <span class="page-link">{{ num }}</span>
                             </li>
@@ -82,9 +82,9 @@
                         {% endif %}
                     {% endfor %}
     
-                    {% if user_types.has_next %}
+                    {% if user_roles.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ user_types.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Sonraki</a>
+                            <a class="page-link" href="?page={{ user_roles.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Sonraki</a>
                         </li>
                     {% endif %}
                 </ul>

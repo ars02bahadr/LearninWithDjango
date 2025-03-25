@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_role_list' %}">Kullanıcı Rolleri</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile_list' %}">Kullanıcılar</a>
+                        </li>
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav">
@@ -40,6 +43,13 @@
                                 <i class="fas fa-user"></i> {{ user.get_full_name|default:user.username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                {% with profile=user.profile %}
+                                    {% if profile %}
+                                        <li><a class="dropdown-item" href="{% url 'profile_settings' %}">Profil Ayarları</a></li>
+                                    {% else %}
+                                        <li><a class="dropdown-item" href="{% url 'profile_create' %}">Profil Oluştur</a></li>
+                                    {% endif %}
+                                {% endwith %}
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
                             </ul>
                         </li>
